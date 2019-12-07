@@ -18,6 +18,7 @@
 #include "hal.h"
 #include "rt_test_root.h"
 #include "oslib_test_root.h"
+#include "../../../os/common/ext/ST/STM32G4xx/stm32g4xx.h"
 
 /*
  * Green LED blinker thread, times are in milliseconds.
@@ -60,6 +61,10 @@ int main(void) {
    * Normal main() thread activity, in this demo it does nothing except
    * sleeping in a loop and check the button state.
    */
+  
+  SET_BIT(FDCAN1->CCCR, FDCAN_CCCR_CCE);
+  SET_BIT(FCAN1->CCCR, FDCAN_CCCR_TEST);
+  SET_BIT(FDCAN1->TEST, FDCAN_TEST_LBCK);
   while (true) {
    if (palReadLine(LINE_INPUT_A12)) {
       BLINK_SLEEP = 2000;
