@@ -52,11 +52,6 @@ int main(void) {
   chSysInit();
 
   /*
-   * Activates the serial driver 2 using the driver default configuration.
-   */
-  sdStart(&LPSD1, NULL);
-
-  /*
    * Creates the blinker thread.
    */
   chThdCreateStatic(waThread1, sizeof(waThread1), NORMALPRIO, Thread1, NULL);
@@ -66,9 +61,7 @@ int main(void) {
    * sleeping in a loop and check the button state.
    */
   while (true) {
-   if (palReadLine(GPIOA_PIN12)) {
-      // test_execute((BaseSequentialStream *)&LPSD1, &rt_test_suite);
-      // test_execute((BaseSequentialStream *)&LPSD1, &oslib_test_suite);
+   if (palReadLine(LINE_INPUT_A12)) {
       BLINK_SLEEP = 2000;
    }
    else {

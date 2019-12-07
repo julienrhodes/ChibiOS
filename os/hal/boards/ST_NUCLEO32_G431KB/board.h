@@ -190,6 +190,7 @@
  */
 #define LINE_STLINK_TX              PAL_LINE(GPIOA, 2U)
 #define LINE_STLINK_RX              PAL_LINE(GPIOA, 3U)
+#define LINE_INPUT_A12              PAL_LINE(GPIOA, 12U)
 #define LINE_SWDIO                  PAL_LINE(GPIOA, 13U)
 #define LINE_SWCLK                  PAL_LINE(GPIOA, 14U)
 #define LINE_BOOT0                  PAL_LINE(GPIOB, 8U)
@@ -269,7 +270,7 @@
                                      PIN_MODE_ANALOG(GPIOA_PIN9) |          \
                                      PIN_MODE_ANALOG(GPIOA_PIN10) |         \
                                      PIN_MODE_ANALOG(GPIOA_PIN11) |         \
-                                     PIN_MODE_ANALOG(GPIOA_PIN12) |         \
+                                     PIN_MODE_INPUT(GPIOA_PIN12)  |         \
                                      PIN_MODE_ALTERNATE(GPIOA_SWDIO) |      \
                                      PIN_MODE_ALTERNATE(GPIOA_SWCLK) |      \
                                      PIN_MODE_ANALOG(GPIOA_PIN15))
