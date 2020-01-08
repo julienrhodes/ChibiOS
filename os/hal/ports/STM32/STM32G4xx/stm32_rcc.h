@@ -569,27 +569,27 @@
  * @{
  */
 /**
- * @brief   Enables the FDCAN1 peripheral clock.
+ * @brief   Enables all FDCAN peripheral clocks.
  *
  * @param[in] lp        low power enable flag
  *
  * @api
  */
-#define rccEnableFDCAN1(lp) rccEnableAPB1R1(RCC_APB1ENR1_FDCANEN, lp)
+#define rccEnableFDCAN(lp) rccEnableAPB1R1(RCC_APB1ENR1_FDCANEN, lp)
 
 /**
- * @brief   Disables the FDCAN1 peripheral clock.
+ * @brief   Disables all FDCAN peripheral clocks.
  *
  * @api
  */
-#define rccDisableFDCAN1() rccDisableAPB1R1(RCC_APB1ENR1_FDCANEN)
+#define rccDisableFDCAN() rccDisableAPB1R1(RCC_APB1ENR1_FDCANEN)
 
 /**
- * @brief   Resets the FDCAN1 peripheral.
+ * @brief   Resets all FDCAN peripherals.
  *
  * @api
  */
-#define rccResetFDCAN1() rccResetAPB1R1(RCC_APB1RSTR1_FDCANRST)
+#define rccResetFDCAN() rccResetAPB1R1(RCC_APB1RSTR1_FDCANRST)
 /** @} */
 
 /**

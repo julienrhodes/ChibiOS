@@ -202,6 +202,8 @@ static void can_lld_tx_handler(CANDriver *canp) {
  *
  * @isr
  */
+
+#if STM32_CAN_USE_CAN1 == TRUE
 OSAL_IRQ_HANDLER(STM32_CAN1_IRQ_HANDLER_0) {
 
   OSAL_IRQ_PROLOGUE();
@@ -211,6 +213,29 @@ OSAL_IRQ_HANDLER(STM32_CAN1_IRQ_HANDLER_0) {
 
   OSAL_IRQ_EPILOGUE();
 }
+#endif
+#if STM32_CAN_USE_CAN2 == TRUE
+OSAL_IRQ_HANDLER(STM32_CAN2_IRQ_HANDLER_0) {
+
+  OSAL_IRQ_PROLOGUE();
+
+  can_lld_rx0_handler(&CAND2);
+  can_lld_tx_handler(&CAND2);
+
+  OSAL_IRQ_EPILOGUE();
+}
+#endif
+#if STM32_CAN_USE_CAN3 == TRUE
+OSAL_IRQ_HANDLER(STM32_CAN3_IRQ_HANDLER_0) {
+
+  OSAL_IRQ_PROLOGUE();
+
+  can_lld_rx0_handler(&CAND3);
+  can_lld_tx_handler(&CAND3);
+
+  OSAL_IRQ_EPILOGUE();
+}
+#endif
 
 /*===========================================================================*/
 /* Driver exported functions.                                                */
@@ -264,21 +289,19 @@ void _can_lld_init(CANDriver *canp, FDCAN_GlobalTypeDef *fdcan, uint32_t *ram_ba
  */
 void can_lld_init(void) {
 
+  rccResetFDCAN();
+  rccEnableFDCAN(true);  /* Stays on in sleep */
+
 #if STM32_CAN_USE_CAN1 == TRUE
-  rccResetFDCAN1();
-  rccEnableFDCAN1(true);  /* Stays on in sleep */
   _can_lld_init(&CAND1, FDCAN1, (uint32_t *) (SRAMCAN_BASE + 0U * SRAMCAN_SIZE));
 #endif
 #if STM32_CAN_USE_CAN2 == TRUE
-  rccResetFDCAN2();
-  rccEnableFDCAN2(true);  /* Stays on in sleep */
   _can_lld_init(&CAND2, FDCAN2, (uint32_t *) (SRAMCAN_BASE + 1U * SRAMCAN_SIZE));
 #endif
 #if STM32_CAN_USE_CAN3 == TRUE
-  rccResetFDCAN3();
-  rccEnableFDCAN3(true);  /* Stays on in sleep */
   _can_lld_init(&CAND3, FDCAN3, (uint32_t *) (SRAMCAN_BASE + 2U * SRAMCAN_SIZE));
 #endif
+
 }
 
 /**
@@ -292,11 +315,7 @@ void can_lld_start(CANDriver *canp) {
 
   if (canp->state == CAN_STOP) {
     /* Enables the peripheral.*/
-#if STM32_CAN_USE_CAN1 == TRUE
-    if (&CAND1 == canp) {
-      rccEnableFDCAN1(true);  /* Stays on in sleep */
-    }
-#endif
+    rccEnableFDCAN(true);  /* Stays on in sleep */
   }
   /* Configures the peripheral.*/
   CLEAR_BIT(canp->can->CCCR, FDCAN_CCCR_CSR);
@@ -338,7 +357,18 @@ void can_lld_start(CANDriver *canp) {
     SET_BIT(canp->can->CCCR, FDCAN_CCCR_BRSE);
   }
 
-  nvicEnableVector(FDCAN1_IT0_IRQn, STM32_IRQ_CAN1_PRIORITY);
+#if STM32_CAN_USE_CAN1 == TRUE
+  nvicEnableVector(FDCAN1_IT0_IRQn, STM32_IRQ_FDCAN1_IT0_PRIORITY);
+#endif
+
+#if STM32_CAN_USE_CAN1 == TRUE
+  nvicEnableVector(FDCAN2_IT0_IRQn, STM32_IRQ_FDCAN2_IT0_PRIORITY);
+#endif
+
+#if STM32_CAN_USE_CAN1 == TRUE
+  nvicEnableVector(FDCAN3_IT0_IRQn, STM32_IRQ_FDCAN3_IT0_PRIORITY);
+#endif
+
   /* Clear interrupts */
   WRITE_REG(canp->can->IR, 0xFFFF);
   /* Enable interrupts */
@@ -375,12 +405,8 @@ void can_lld_stop(CANDriver *canp) {
     WRITE_REG(canp->can->IR, 0xFFF);
 
     /* Disables the peripheral.*/
-#if STM32_CAN_USE_CAN1 == TRUE
-    if (&CAND1 == canp) {
-      rccDisableFDCAN1();
-      SET_BIT(canp->can->CCCR, FDCAN_CCCR_CSR);
-    }
-#endif
+    rccDisableFDCAN();
+    SET_BIT(canp->can->CCCR, FDCAN_CCCR_CSR);
   }
 }
 
