@@ -137,7 +137,7 @@
  * @note    The default is @p TRUE.
  */
 #if !defined(CH_CFG_OPTIMIZE_SPEED)
-#define CH_CFG_OPTIMIZE_SPEED               TRUE
+#define CH_CFG_OPTIMIZE_SPEED               FALSE
 #endif
 
 /** @} */
@@ -425,6 +425,17 @@
 #define CH_CFG_USE_DELEGATES                TRUE
 #endif
 
+/**
+ * @brief   Jobs Queues APIs.
+ * @details If enabled then the jobs queues APIs are included
+ *          in the kernel.
+ *
+ * @note    The default is @p TRUE.
+ */
+#if !defined(CH_CFG_USE_JOBS)
+#define CH_CFG_USE_JOBS                     TRUE
+#endif
+
 /** @} */
 
 /*===========================================================================*/
@@ -533,7 +544,7 @@
  * @note    The default is @p FALSE.
  */
 #if !defined(CH_DBG_ENABLE_CHECKS)
-#define CH_DBG_ENABLE_CHECKS                FALSE
+#define CH_DBG_ENABLE_CHECKS                TRUE
 #endif
 
 /**
@@ -545,7 +556,7 @@
  * @note    The default is @p FALSE.
  */
 #if !defined(CH_DBG_ENABLE_ASSERTS)
-#define CH_DBG_ENABLE_ASSERTS               FALSE
+#define CH_DBG_ENABLE_ASSERTS               TRUE
 #endif
 
 /**
