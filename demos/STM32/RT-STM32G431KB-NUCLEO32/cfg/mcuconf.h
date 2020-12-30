@@ -1,5 +1,5 @@
 /*
-    ChibiOS - Copyright (C) 2006..2018 Giovanni Di Sirio
+    ChibiOS - Copyright (C) 2006..2020 Giovanni Di Sirio
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -40,14 +40,15 @@
  */
 #define STM32_NO_INIT                       FALSE
 #define STM32_VOS                           STM32_VOS_RANGE1
-#define STM32_PWR_CR2                       (STM32_PLS_LEV0 | STM32_PVDE_DISABLED)
+#define STM32_PWR_CR2                       (PWR_CR2_PLS_LEV0)
+#define STM32_PWR_CR3                       (PWR_CR3_EIWF)
+#define STM32_PWR_CR4                       (0U)
 #define STM32_HSI16_ENABLED                 TRUE
 #define STM32_HSI48_ENABLED                 TRUE
 #define STM32_HSE_ENABLED                   FALSE
 #define STM32_LSI_ENABLED                   FALSE
 #define STM32_LSE_ENABLED                   FALSE
 #define STM32_SW                            STM32_SW_PLLRCLK
-//#define STM32_PLLSRC                        STM32_PLLSRC_HSE
 #define STM32_PLLSRC                        STM32_PLLSRC_HSI16
 #define STM32_PLLM_VALUE                    4
 #define STM32_PLLN_VALUE                    85
@@ -91,6 +92,16 @@
 #define STM32_IRQ_EXTI4_PRIORITY            6
 #define STM32_IRQ_EXTI5_9_PRIORITY          6
 #define STM32_IRQ_EXTI10_15_PRIORITY        6
+#define STM32_IRQ_EXTI164041_PRIORITY       6
+#define STM32_IRQ_EXTI17_PRIORITY           6
+#define STM32_IRQ_EXTI18_PRIORITY           6
+#define STM32_IRQ_EXTI19_PRIORITY           6
+#define STM32_IRQ_EXTI20_PRIORITY           6
+#define STM32_IRQ_EXTI212229_PRIORITY       6
+#define STM32_IRQ_EXTI30_32_PRIORITY        6
+#define STM32_IRQ_EXTI33_PRIORITY           6
+
+#define STM32_IRQ_FDCAN1_PRIORITY           10
 
 #define STM32_IRQ_TIM1_BRK_TIM15_PRIORITY   7
 #define STM32_IRQ_TIM1_UP_TIM16_PRIORITY    7
@@ -104,19 +115,33 @@
 #define STM32_IRQ_TIM8_UP_PRIORITY          7
 #define STM32_IRQ_TIM8_CC_PRIORITY          7
 
-#define STM32_IRQ_USART1_PRIORITY           3
-#define STM32_IRQ_USART2_PRIORITY           3
-#define STM32_IRQ_USART3_PRIORITY           3
-#define STM32_IRQ_UART4_PRIORITY            3
-#define STM32_IRQ_LPUART1_PRIORITY          3
+#define STM32_IRQ_USART1_PRIORITY           12
+#define STM32_IRQ_USART2_PRIORITY           12
+#define STM32_IRQ_USART3_PRIORITY           12
+#define STM32_IRQ_UART4_PRIORITY            12
+#define STM32_IRQ_LPUART1_PRIORITY          12
 
 /*
  * ADC driver system settings.
  */
+#define STM32_ADC_DUAL_MODE                 FALSE
+#define STM32_ADC_COMPACT_SAMPLES           FALSE
+#define STM32_ADC_USE_ADC1                  TRUE
+#define STM32_ADC_USE_ADC2                  TRUE
+#define STM32_ADC_ADC1_DMA_STREAM           STM32_DMA_STREAM_ID_ANY
+#define STM32_ADC_ADC2_DMA_STREAM           STM32_DMA_STREAM_ID_ANY
+#define STM32_ADC_ADC1_DMA_PRIORITY         2
+#define STM32_ADC_ADC2_DMA_PRIORITY         2
+#define STM32_ADC_ADC12_IRQ_PRIORITY        5
+#define STM32_ADC_ADC1_DMA_IRQ_PRIORITY     5
+#define STM32_ADC_ADC2_DMA_IRQ_PRIORITY     5
+#define STM32_ADC_ADC12_CLOCK_MODE          ADC_CCR_CKMODE_AHB_DIV4
+#define STM32_ADC_ADC12_PRESC               ADC_CCR_PRESC_DIV2
 
 /*
  * CAN driver system settings.
  */
+#define STM32_CAN_USE_FDCAN1                FALSE
 
 /*
  * DAC driver system settings.
@@ -213,6 +238,15 @@
 #define STM32_SERIAL_USE_USART3             FALSE
 #define STM32_SERIAL_USE_UART4              FALSE
 #define STM32_SERIAL_USE_LPUART1            TRUE
+
+/*
+ * SIO driver system settings.
+ */
+#define STM32_SIO_USE_USART1                FALSE
+#define STM32_SIO_USE_USART2                FALSE
+#define STM32_SIO_USE_USART3                FALSE
+#define STM32_SIO_USE_UART4                 FALSE
+#define STM32_SIO_USE_LPUART1               FALSE
 
 /*
  * SPI driver system settings.
